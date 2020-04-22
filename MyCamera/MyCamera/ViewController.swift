@@ -58,7 +58,7 @@ class ViewController: UIViewController , UINavigationControllerDelegate , UIImag
     // SNSに投稿するをタップすると実行
     @IBAction func shareButtonAction(_ sender: Any) {
         // 表示画像をアンラップしてシェア画像を取り出す
-        if let shareImage = pictureImage.image {
+        if let shareImage = pictureImage.image?.resize() {
             // UIActivityViewCintrollerに渡す配列を作成
             let shareItems = [shareImage]
             // UIActivityViewControllerにシェア画像を渡す
