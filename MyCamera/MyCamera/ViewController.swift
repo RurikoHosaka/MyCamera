@@ -73,9 +73,23 @@ class ViewController: UIViewController , UINavigationControllerDelegate , UIImag
     // (1)撮影が終わったときに呼ばれるdelegateメソッド
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info:[UIImagePickerController.InfoKey : Any]) {
         // (2)撮影した画像を配置したpictureImageに渡す
-        pictureImage.image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        captureImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
         // (3)モーダルビューを閉じる
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: {
+            // (4)エフェクト画面に遷移
+            self.performSegue(withIdentifier: "showEffectView", sender: nil)
+        })
+    }
+    
+    // 次の画面遷移するときに渡す画像を格納する場所
+    var captureImage : UIImage?
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // 次の画面のインスタンスを格納
+        if let nextViewController = segue.destination as? EffectViewController {
+            // 次の画面のインスタンスに取得した画面を渡す
+            nextViewController.originalImage = captureImage
+        }
     }
 }
 
